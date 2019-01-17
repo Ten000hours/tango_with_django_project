@@ -20,8 +20,10 @@ from django.conf.urls import url
 from django.conf.urls import include
 
 urlpatterns = [
+    # url(r'^$', views.index, name='index'),
+    # url(r'^rango/', include('rango.urls')),
+    # url(r'^admin/', admin.site.urls),
+    # #path('admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
-    url(r'^rango/', include('rango.urls')),
     url(r'^admin/', admin.site.urls),
-    path('admin/', admin.site.urls),
 ]
