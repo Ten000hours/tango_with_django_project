@@ -50,7 +50,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'tango_with_django_project.urls'
-
+# this is a comment
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
