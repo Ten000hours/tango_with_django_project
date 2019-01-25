@@ -17,38 +17,42 @@ def populate():
 
     python_pages = [
         {"title": "Official Python Tutorial",
-         "url": "http://docs.python.org/2/tutorial/"},
+         "url": "http://docs.python.org/2/tutorial/","likes":64,
+         "views":122},
         {"title": "How to Think like a Computer Scientist",
-         "url": "http://www.greenteapress.com/thinkpython/"},
+         "url": "http://www.greenteapress.com/thinkpython/","likes":64,
+         "views":122},
         {"title": "Learn Python in 10 Minutes",
-         "url": "http://www.korokithakis.net/tutorials/python/"}]
+         "url": "http://www.korokithakis.net/tutorials/python/","likes":64,
+         "views":122}]
 
     django_pages = [
         {"title": "Official Django Tutorial",
-         "url": "https://docs.djangoproject.com/en/1.9/intro/tutorial01/"},
+         "url": "https://docs.djangoproject.com/en/1.9/intro/tutorial01/",
+         "likes":64,
+         "views":122},
         {"title": "Django Rocks",
-         "url": "http://www.djangorocks.com/"},
+         "url": "http://www.djangorocks.com/",
+         "likes":64,
+         "views":122},
         {"title": "How to Tango with Django",
-         "url": "http://www.tangowithdjango.com/"}]
+         "url": "http://www.tangowithdjango.com/",
+         "likes":64,
+         "views":122}]
 
     other_pages = [
         {"title": "Bottle",
-         "url": "http://bottlepy.org/docs/dev/"},
+         "url": "http://bottlepy.org/docs/dev/",
+         "likes":64,
+         "views":122},
         {"title": "Flask",
-         "url": "http://flask.pocoo.org"}]
-    python_pages_likes = [
-        {"title": "python_pages",
-         "likes": "12"},
-        {"title": "django_pages",
-         "likes": "22"},
-        {"title": "other_pages",
-         "likes": "55"}
+         "url": "http://flask.pocoo.org",
+         "likes":64,
+         "views":122}]
 
-    ]
-
-    cats = {"Python": {"pages": python_pages, "likes": 64, "views": 64},
-            "Django": {"pages": django_pages, "likes": 33, "views": 64},
-            "Other Frameworks": {"pages": other_pages, "likes": 52, "views": 64}}
+    cats = {"Python": {"pages": python_pages},
+            "Django": {"pages": django_pages},
+            "Other Frameworks": {"pages": other_pages}}
 
     # If you want to add more catergories or pages,
 
@@ -61,9 +65,9 @@ def populate():
     # for more information about how to iterate over a dictionary properly.
 
     for cat, cat_data in cats.items():
-        c = add_cat(cat, cat_data["views"], cat_data["likes"])
+        c = add_cat(cat)
         for p in cat_data["pages"]:
-            add_page(c, p["title"], p["url"])
+            add_page(c, p["title"], p["url"],p["likes"],views=p["views"])
 
     # Print out the categories we have added.
     for c in Category.objects.all():
@@ -71,10 +75,8 @@ def populate():
             print("- {0} - {1}".format(str(c), str(p)))
 
 
-def add_cat(name, views, likes):
+def add_cat(name):
     c = Category.objects.get_or_create(name=name)[0]
-    c.views = views
-    c.likes = likes
     c.save()
 
     return c
