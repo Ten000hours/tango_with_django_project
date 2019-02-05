@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from rango.forms import PageForm
 from rango.models import Category,Page
+from rango.forms import CategoryForm
 def index(request):
     # construct a dict to pass to the template engine as its context
     # note the key boldmessage is the same as {{boldmessage}} in the template
@@ -35,3 +37,46 @@ def show_category(request, category_name_slug):
 def about(request, category_name_slug):
     context_dict={}
     return render(request, 'rango/category.html', context_dict)
+
+def add_category(request):
+    form= CategoryForm()
+
+    ## A HTTP POST
+    if request.method=="POST":
+        form=CategoryForm(request.POST)
+
+        #have we been provided with a valid form?
+        if form.is_valid():
+            # save the new category to the database
+            form.save(commit=True)
+            #now that the category is saved
+            #we could give a confirmation
+            #but since the most recent category added is on the index page
+            # we can direct the user back to the index page
+            return index(request)
+        else:
+            # the supplied form contained errors
+            print(form.errors)
+
+    return render(request,"rango/add_category.html",{"form":form})
+
+
+def add_page(request, category_name_slug):
+    try:
+        category = Category.objects.get(slug=category_name_slug)
+    except Category.DoesNotExist:
+        category = None
+    form = PageForm()
+    if request.method == 'POST':
+        form = PageForm(request.POST)
+        if form.is_valid():
+            if category:
+                page = form.save(commit=False)
+                page.category = category
+                page.views = 0
+                page.save()
+                return show_category(request, category_name_slug)
+        else:
+            print(form.errors)
+    context_dict = {'form':form, 'category': category}
+    return render(request, 'rango/add_page.html', context_dict)
