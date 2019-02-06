@@ -15,7 +15,7 @@
             {% for category in categories %}
 <!-- Following line changed to add an HTML hyperlink -->
             <li>
-            <a href="/rango/category/{{ category.slug }}">{{ category.name }}</a>
+            <a href="{% url 'show_category' category.slug %}">{{ category.name }}</a>
             </li>
             {% endfor %}
         </ul>
@@ -27,6 +27,7 @@
             <a href="/rango/about/">About Rango</a><br />
             <img src="{% static "image/rango.jpg" %}" alt="Picture of Rango" />
             <a href="/rango/add_category/">Add a New Category</a><br />
+
         </div>
     </body>
 </html>
