@@ -28,7 +28,7 @@ class IndexPageTests(TestCase):
         self.assertTemplateUsed(response, 'rango/index.html')
 
     def test_rango_picture_displayed(self):
-        # Check if is there an image called 'rango.jpg' on the index page
+        # Check if is there an images called 'rango.jpg' on the index page
         # Chapter 4
         response = self.client.get(reverse('index'))
         self.assertIn(b'img src="/static/images/rango.jpg', response.content)
@@ -50,7 +50,7 @@ class AboutPageTests(TestCase):
         self.assertIn(b'This tutorial has been put together by', response.content)
 
     def test_about_contain_image(self):
-        # Check if is there an image on the about page
+        # Check if is there an images on the about page
         # Chapter 4
         response = self.client.get(reverse('about'))
         self.assertIn(b'img src="/media/', response.content)
@@ -117,7 +117,7 @@ class Chapter4ViewTests(TestCase):
         self.assertTemplateUsed(response, 'rango/about.html')
 
     def test_does_about_contain_img(self):
-        # Check if in the about page contains an image
+        # Check if in the about page contains an images
         response = self.client.get(reverse('about'))
         self.assertIn('img', response.content)
 

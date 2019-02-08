@@ -7,8 +7,11 @@ def index(request):
     # construct a dict to pass to the template engine as its context
     # note the key boldmessage is the same as {{boldmessage}} in the template
     category_list = Category.objects.order_by('-likes')[:5]
-    context_dict = {'categories': category_list}
+    # context_dict = {'categories': category_list}
 
+    page_list = Page.objects.order_by('-views')[:5]
+
+    context_dict = {'categories': category_list, 'pages': page_list}
     #return a rendered response to send to the client
     #we make use of the shortcut func to make our lives easier
     # note that  the first parameter is the template we wish to use
@@ -34,9 +37,12 @@ def show_category(request, category_name_slug):
             context_dict['category'] = None
             context_dict['pages'] = None
     return render(request, 'rango/category.html', context_dict)
-def about(request, category_name_slug):
-    context_dict={}
-    return render(request, 'rango/category.html', context_dict)
+def about(request):
+    # prints out whether the method is a GET or a POST
+    print(request.method)
+    # prints out the user name, if no one is logged in it prints `AnonymousUser`
+    print(request.user)
+    return render(request, 'rango/about.html', {})
 
 def add_category(request):
     form= CategoryForm()
