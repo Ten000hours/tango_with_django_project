@@ -6,15 +6,16 @@
 	
 	{% block body_block %}
         <div>
-	        <h1 class="page-header">About Page</h1>			
+			{% if visits %}
+	        <h1 class="page-header">About Page</h1>
+			<a >{{ visits }}</a>
 	        This is about page
+            {% endif %}
 		</div>	
 		<img src="{% static "image/rango.jpg" %}" alt="Picture of Rango" />
-		<p>
-		<img src="{{MEDIA_URL}}cat.jpg" alt="Picture of Elgin the Cat from Rango">
-		<p>
-		The image of the cat was taken from <a href="http://lizzychrome.deviantart.com/art/Elgin-424012566">	Deviant Art by LizzyChrome</a>.
-	</p>
+
+
+
 	<hr>
 
 		<button class="btn btn-primary" id="about-btn"> JQuery Alert Example</button>

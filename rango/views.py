@@ -9,7 +9,42 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from datetime import datetime
+
+# Create your views here.
+def get_server_side_cookie(request, cookie, default_val=None):
+    val = request.session.get(cookie)
+    if not val:
+        val = default_val
+    return val
+
+def visitor_cookie_handler(request):
+    # Get the number of visits to the site.
+    # We use the COOKIES.get() function to obtain the visits cookie.
+    # If the cookie exists, the value returned is casted to an integer.
+    # If the cookie doesn't exist, then the default value of 1 is used.
+    visits = int(get_server_side_cookie(request, 'visits', '1'))
+
+    last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()) )
+
+    last_visit_time = datetime.strptime(last_visit_cookie[:-7], "%Y-%m-%d %H:%M:%S")
+    #last_visit_time = datetime.now()
+    # If it's been more than a day since the last visit...
+    if (datetime.now() - last_visit_time).seconds > 0:
+        visits = visits + 1
+        #update the last visit cookie now that we have updated the count
+        request.session['last_visit'] = str(datetime.now())
+    else:
+        visits = 1
+        # set the last visit cookie
+        request.session['last_visit'] = last_visit_cookie
+    # update/set the visits cookie
+    request.session['visits'] = visits
+
+
+
 def index(request):
+    request.session.set_test_cookie()
     # construct a dict to pass to the template engine as its context
     # note the key boldmessage is the same as {{boldmessage}} in the template
     category_list = Category.objects.order_by('-likes')[:5]
@@ -17,12 +52,19 @@ def index(request):
 
     page_list = Page.objects.order_by('-views')[:5]
 
+
     context_dict = {'categories': category_list, 'pages': page_list}
+    response = render(request, 'rango/index.html', context_dict)
     #return a rendered response to send to the client
     #we make use of the shortcut func to make our lives easier
     # note that  the first parameter is the template we wish to use
 
-    return render(request,"rango/index.html",context_dict)
+    # Call the helper function to handle the cookies
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+
+    response = render(request, 'rango/index.html', context=context_dict)
+    return response
 
 def show_category(request, category_name_slug):
     context_dict = {}
@@ -44,11 +86,18 @@ def show_category(request, category_name_slug):
             context_dict['pages'] = None
     return render(request, 'rango/category.html', context_dict)
 def about(request):
+    request.session.set_test_cookie()
+    if request.session.test_cookie_worked():
+        print("TEST COOKIE WORKED!")
+        request.session.delete_test_cookie()
     # prints out whether the method is a GET or a POST
     print(request.method)
     # prints out the user name, if no one is logged in it prints `AnonymousUser`
     print(request.user)
-    return render(request, 'rango/about.html', {})
+    context_dict={}
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+    return render(request, 'rango/about.html', context=context_dict)
 
 def add_category(request):
     form= CategoryForm()
