@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rango.forms import PageForm
-from rango.models import Category,Page
+from rango.models import Category, Page
 from rango.forms import CategoryForm
 from rango.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login
@@ -11,12 +11,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from datetime import datetime
 
+
 # Create your views here.
 def get_server_side_cookie(request, cookie, default_val=None):
     val = request.session.get(cookie)
     if not val:
         val = default_val
     return val
+
 
 def visitor_cookie_handler(request):
     # Get the number of visits to the site.
@@ -25,14 +27,14 @@ def visitor_cookie_handler(request):
     # If the cookie doesn't exist, then the default value of 1 is used.
     visits = int(get_server_side_cookie(request, 'visits', '1'))
 
-    last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()) )
+    last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()))
 
     last_visit_time = datetime.strptime(last_visit_cookie[:-7], "%Y-%m-%d %H:%M:%S")
-    #last_visit_time = datetime.now()
+    # last_visit_time = datetime.now()
     # If it's been more than a day since the last visit...
     if (datetime.now() - last_visit_time).seconds > 0:
         visits = visits + 1
-        #update the last visit cookie now that we have updated the count
+        # update the last visit cookie now that we have updated the count
         request.session['last_visit'] = str(datetime.now())
     else:
         visits = 1
@@ -40,7 +42,6 @@ def visitor_cookie_handler(request):
         request.session['last_visit'] = last_visit_cookie
     # update/set the visits cookie
     request.session['visits'] = visits
-
 
 
 def index(request):
@@ -52,11 +53,10 @@ def index(request):
 
     page_list = Page.objects.order_by('-views')[:5]
 
-
     context_dict = {'categories': category_list, 'pages': page_list}
     response = render(request, 'rango/index.html', context_dict)
-    #return a rendered response to send to the client
-    #we make use of the shortcut func to make our lives easier
+    # return a rendered response to send to the client
+    # we make use of the shortcut func to make our lives easier
     # note that  the first parameter is the template we wish to use
 
     # Call the helper function to handle the cookies
@@ -65,6 +65,7 @@ def index(request):
 
     response = render(request, 'rango/index.html', context=context_dict)
     return response
+
 
 def show_category(request, category_name_slug):
     context_dict = {}
@@ -82,9 +83,11 @@ def show_category(request, category_name_slug):
     except Category.DoesNotExist:
         # We get here if we didn't find the specified category.
         # Don't do anything -
-            context_dict['category'] = None
-            context_dict['pages'] = None
+        context_dict['category'] = None
+        context_dict['pages'] = None
     return render(request, 'rango/category.html', context_dict)
+
+
 def about(request):
     request.session.set_test_cookie()
     if request.session.test_cookie_worked():
@@ -94,32 +97,33 @@ def about(request):
     print(request.method)
     # prints out the user name, if no one is logged in it prints `AnonymousUser`
     print(request.user)
-    context_dict={}
+    context_dict = {}
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
     return render(request, 'rango/about.html', context=context_dict)
 
+
 def add_category(request):
-    form= CategoryForm()
+    form = CategoryForm()
 
     ## A HTTP POST
-    if request.method=="POST":
-        form=CategoryForm(request.POST)
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
 
-        #have we been provided with a valid form?
+        # have we been provided with a valid form?
         if form.is_valid():
             # save the new category to the database
             form.save(commit=True)
-            #now that the category is saved
-            #we could give a confirmation
-            #but since the most recent category added is on the index page
+            # now that the category is saved
+            # we could give a confirmation
+            # but since the most recent category added is on the index page
             # we can direct the user back to the index page
             return index(request)
         else:
             # the supplied form contained errors
             print(form.errors)
 
-    return render(request,"rango/add_category.html",{"form":form})
+    return render(request, "rango/add_category.html", {"form": form})
 
 
 def add_page(request, category_name_slug):
@@ -139,7 +143,7 @@ def add_page(request, category_name_slug):
                 return show_category(request, category_name_slug)
         else:
             print(form.errors)
-    context_dict = {'form':form, 'category': category}
+    context_dict = {'form': form, 'category': category}
     return render(request, 'rango/add_page.html', context_dict)
 
 
@@ -184,51 +188,53 @@ def register(request):
 def user_login(request):
     # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
-# Gather the username and password provided by the user.
-# This information is obtained from the login form.
-# We use request.POST.get('<variable>') as opposed
-# to request.POST['<variable>'], because the
-# request.POST.get('<variable>') returns None if the
-# value does not exist, while request.POST['<variable>']
-# will raise a KeyError exception.
+        # Gather the username and password provided by the user.
+        # This information is obtained from the login form.
+        # We use request.POST.get('<variable>') as opposed
+        # to request.POST['<variable>'], because the
+        # request.POST.get('<variable>') returns None if the
+        # value does not exist, while request.POST['<variable>']
+        # will raise a KeyError exception.
         username = request.POST.get('username')
         password = request.POST.get('password')
-# Use Django's machinery to attempt to see if the username/password
-# combination is valid - a User object is returned if it is.
+        # Use Django's machinery to attempt to see if the username/password
+        # combination is valid - a User object is returned if it is.
         user = authenticate(username=username, password=password)
-# If we have a User object, the details are correct.
-# If None (Python's way of representing the absence of a value), no user
-# with matching credentials was found.
+        # If we have a User object, the details are correct.
+        # If None (Python's way of representing the absence of a value), no user
+        # with matching credentials was found.
         if user:
-# Is the account active? It could have been disabled.
+            # Is the account active? It could have been disabled.
             if user.is_active:
-# If the account is valid and active, we can log the user in.
-# We'll send the user back to the homepage.
+                # If the account is valid and active, we can log the user in.
+                # We'll send the user back to the homepage.
                 login(request, user)
                 return HttpResponseRedirect(reverse('index'))
             else:
-# An inactive account was used - no logging in!
+                # An inactive account was used - no logging in!
                 return HttpResponse("Your Rango account is disabled.")
         else:
-# Bad login details were provided. So we can't log the user in.
+            # Bad login details were provided. So we can't log the user in.
             print("Invalid login details: {0}, {1}".format(username, password))
             return HttpResponse("Invalid login details supplied.")
-# The request is not a HTTP POST, so display the login form.
-# This scenario would most likely be a HTTP GET.
+    # The request is not a HTTP POST, so display the login form.
+    # This scenario would most likely be a HTTP GET.
     else:
-# No context variables to pass to the template system, hence the
-# blank dictionary object...
+        # No context variables to pass to the template system, hence the
+        # blank dictionary object...
         return render(request, 'rango/login.html', {})
+
 
 @login_required
 def restricted(request):
-        return render(request, 'rango/restricted.html', {})
+    return render(request, 'rango/restricted.html', {})
+
 
 # Use the login_required() decorator to ensure only those logged in can
 # access the view.
 @login_required
 def user_logout(request):
-# Since we know the user is logged in, we can now just log them out.
+    # Since we know the user is logged in, we can now just log them out.
     logout(request)
-# Take the user back to the homepage.
+    # Take the user back to the homepage.
     return HttpResponseRedirect(reverse('index'))
