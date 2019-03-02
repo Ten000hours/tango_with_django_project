@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from rango.forms import PageForm
 from rango.models import Category, Page
 from rango.forms import CategoryForm
-from rango.forms import UserForm, UserProfileForm
+from rango.forms import UserForm, UserProfileForm,PostForm,ContactProfileForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -160,6 +160,7 @@ def register(request):
 
             profile = profile_form.save(commit=False)
             profile.user = user
+            print("===========")
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
                 profile.save()
@@ -238,3 +239,39 @@ def user_logout(request):
     logout(request)
     # Take the user back to the homepage.
     return HttpResponseRedirect(reverse('index'))
+
+
+# ==============================================
+@login_required
+def post_ad(request):
+    posted = False
+    if request.method == 'POST':
+        post_ad_form = PostForm(data=request.POST)
+        contact_profile_form = ContactProfileForm(data=request.POST)
+
+        if post_ad_form.is_valid() and contact_profile_form.is_valid():
+            contact = contact_profile_form.save()
+            # ad.set_password(ad.password)
+            contact.save()
+
+            ad_form = post_ad_form.save(commit=False)
+            # profile.user = user
+            if 'image' in request.FILES:
+                ad_form.image = request.FILES['image']
+                ad_form.save()
+                posted = True
+            else:
+                print(post_ad_form.errors, contact_profile_form.errors)
+
+    else:
+
+
+        post_ad_form=PostForm()
+        contact_profile_form=ContactProfileForm()
+
+    return render(request,
+                  'rango/postad.html',
+                  {'post_ad_form': post_ad_form,
+                   'contact_profile_form': contact_profile_form,
+                   'posted': posted
+                   })

@@ -48,3 +48,22 @@ class UserProfile(models.Model):
     # Override the __unicode__() method to return out something meaningful!
     def __str__(self):
         return self.user.username
+
+# =================================================
+class PostAd(models.Model):
+    title = models.CharField(max_length=128, unique=True)
+    image = models.ImageField(upload_to='ad_images', blank=True)
+    description = models.TextField(blank=True)
+    price= models.IntegerField(default=0)
+
+    slug = models.SlugField(unique=True, blank=True)
+
+    def __str__(self):
+        return self.title
+class ContactProfile(models.Model):
+    location= models.CharField(max_length=7,unique=True)
+    email= models.EmailField(max_length=30,blank=True)
+    phone = models.IntegerField(max_length=11, blank=True)
+
+    def __str__(self):
+        return self.email
