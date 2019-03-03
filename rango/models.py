@@ -52,11 +52,11 @@ class UserProfile(models.Model):
 # =================================================
 class PostAd(models.Model):
     title = models.CharField(max_length=128, unique=True)
-    image = models.ImageField(upload_to='ad_images', blank=True)
+    image = models.ImageField(upload_to='ad_images/', blank=True)
     description = models.TextField(blank=True)
     price= models.IntegerField(default=0)
 
-    slug = models.SlugField(unique=True, blank=True)
+    # slug = models.SlugField(unique=False, blank=True)
 
     def __str__(self):
         return self.title

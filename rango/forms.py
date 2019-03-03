@@ -54,6 +54,7 @@ class PostForm(forms.ModelForm):
         fields = ('title', 'image', 'description',"price")
 
 
+
 class ContactProfileForm(forms.ModelForm):
     class Meta:
         model = ContactProfile

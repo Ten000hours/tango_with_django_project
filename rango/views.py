@@ -275,3 +275,11 @@ def post_ad(request):
                    'contact_profile_form': contact_profile_form,
                    'posted': posted
                    })
+
+# ==============================
+def showitem(request):
+    from rango import models
+    ad_list=models.PostAd.objects.all()
+    contect_list=models.ContactProfile.objects.all()
+
+    return render(request,"rango/showitem.html",{"ad_list":ad_list,'contect_list':contect_list})

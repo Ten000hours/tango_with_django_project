@@ -1,0 +1,36 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+show item
+{% endblock %}
+
+{% block body_block %}
+<div>
+    <table border="1">
+        <thead>
+            <th>
+                title
+            </th>
+        <th>description</th>
+        </thead>
+        <tbody>
+            {% for line in ad_list %}
+                <tr>
+                    <td>{{ line.title }}</td>
+                    <td>{{ line.description }}</td>
+                    <td><img src="/media/{{ line.image }}"> "/media/{{ line.image }}"</td>
+
+                </tr>
+
+            {% endfor %}
+        </tbody>
+
+
+    </table>
+
+
+
+</div>
+
+{% endblock %}
