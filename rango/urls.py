@@ -15,5 +15,6 @@ urlpatterns = [
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^adpost/$', views.post_ad, name='adpost'),
     url(r'^showitem/$', views.showitem, name='showitem'),
+    #tets
     # url(r'^ad_images/(?P<path>.*)', 'django.views.static.serve', {'document_root':'E:\\workspace\\tango_with_django_project'}),
 ]
