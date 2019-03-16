@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from rango.forms import PageForm
 from rango.models import Category, Page
 from rango.forms import CategoryForm
-from rango.forms import UserForm, UserProfileForm,PostForm,ContactProfileForm
+from rango.forms import UserForm, UserProfileForm, PostForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -247,12 +247,12 @@ def post_ad(request):
     posted = False
     if request.method == 'POST':
         post_ad_form = PostForm(data=request.POST)
-        contact_profile_form = ContactProfileForm(data=request.POST)
 
-        if post_ad_form.is_valid() and contact_profile_form.is_valid():
-            contact = contact_profile_form.save()
+
+        if post_ad_form.is_valid() :
+
             # ad.set_password(ad.password)
-            contact.save()
+
 
             ad_form = post_ad_form.save(commit=False)
             # profile.user = user
@@ -261,25 +261,38 @@ def post_ad(request):
                 ad_form.save()
                 posted = True
             else:
-                print(post_ad_form.errors, contact_profile_form.errors)
+                print(post_ad_form.errors)
 
     else:
 
+        post_ad_form = PostForm()
 
-        post_ad_form=PostForm()
-        contact_profile_form=ContactProfileForm()
 
     return render(request,
                   'rango/postad.html',
                   {'post_ad_form': post_ad_form,
-                   'contact_profile_form': contact_profile_form,
+
                    'posted': posted
                    })
+
 
 # ==============================
 def showitem(request):
     from rango import models
-    ad_list=models.PostAd.objects.all()
-    contect_list=models.ContactProfile.objects.all()
+    ad_list = models.PostAd.objects.all()
 
-    return render(request,"rango/showitem.html",{"ad_list":ad_list,'contect_list':contect_list})
+
+    return render(request, "rango/showitem.html",
+                  {"ad_list": ad_list})
+
+
+# =================================
+def item(request):
+    from rango import models
+
+    title = request.GET['title']
+
+    ad_list = models.PostAd.objects.filter(title=title)
+
+
+    return render(request, "rango/item.html", {"ad_list": ad_list})

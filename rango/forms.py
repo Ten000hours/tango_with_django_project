@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from rango.models import Category, Page, UserProfile,PostAd,ContactProfile
+from rango.models import Category, Page, UserProfile,PostAd
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="please enter the category name")
@@ -51,11 +51,5 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = PostAd
-        fields = ('title', 'image', 'description',"price")
+        fields = ('title', 'image', 'description',"price",'location', 'email', 'phone')
 
-
-
-class ContactProfileForm(forms.ModelForm):
-    class Meta:
-        model = ContactProfile
-        fields = ('location', 'email', 'phone')

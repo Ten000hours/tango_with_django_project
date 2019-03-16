@@ -1,4 +1,4 @@
-{% extends 'rango/base.html' %}
+{% extends 'rango/base_bootstrap.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -27,7 +27,6 @@ post ad
 
     <!-- Display each form -->
     {{ post_ad_form.as_p }}
-    {{ contact_profile_form.as_p }}
 
     <!-- Provide a button to click to submit the form. -->
     <input type="submit" name="submit" value="adpost"/>

@@ -1,4 +1,4 @@
-{% extends 'rango/base.html' %}
+{% extends 'rango/base_bootstrap.html' %}
 	{% load staticfiles %}
 	{% block title_block %}
 		About
@@ -6,8 +6,10 @@
 
 	{% block body_block %}
         <div>
+
 			{% if visits %}
 	        <h1 class="page-header">About Page</h1>
+	        <p>hover me</p>
 			<a>{{ visits }}</a></br>
 	        This tutorial has been put together by xiangruixu
             {% endif %}
@@ -18,6 +20,9 @@
 
 		The image of the cat was taken from <a href="http://lizzychrome.deviantart.com/art/Elgin-424012566">	Deviant Art by LizzyChrome</a>.
 	</p>
+
+	<button class="btn btn-primary" id="about-btn">
+Click Me - I'm JavaScript on Speed</button>
 
 
 

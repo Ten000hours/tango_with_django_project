@@ -1,36 +1,193 @@
-{% extends 'rango/base.html' %}
+{% extends 'rango/base_bootstrap.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
 show item
 {% endblock %}
 
+
 {% block body_block %}
-<div>
+<!-- <div>
     <table border="1">
-        <thead>
-            <th>
-                title
-            </th>
-        <th>description</th>
-        </thead>
+       
         <tbody>
-            {% for line in ad_list %}
-                <tr>
-                    <td>{{ line.title }}</td>
-                    <td>{{ line.description }}</td>
-                    <td><img src="/media/{{ line.image }}"> "/media/{{ line.image }}"</td>
 
-                </tr>
+        {% for line,con in combine_list %}
 
-            {% endfor %}
+        <div class="collapse navbar-collapse" >
+        <tr>
+            <td id="tdtitle"><a class="btn-link" href="/rango/item?title={{ line.title }}&location={{ con.location }}"
+                                value="{{ line.title }}">{{ line.title }}</a></td>
+            <td id="tddes">{{ line.description }}</td>
+            <td><img src="/media/{{ line.image }}"> "/media/{{ line.image }}"</td>
+
+            <td id="tdloc">{{ con.location }}</td>
+
+
+        </tr>
+        </div>
+      
+
+        {% endfor %}
         </tbody>
 
 
     </table>
 
 
+</div> -->
 
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="jumbotron">
+                <h1>
+                    Hello, world!
+                </h1>
+                <p>
+                    This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+                </p>
+                <p>
+                     <a class="btn btn-primary btn-large" href="#">Learn more</a>
+                </p>
+            </div>
+            <div class="row">
+             {% for line in ad_list %}
+                <div class="col-md-4">
+                    <div class="thumbnail">
+    <ul>
+      <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+      <li><span class="converse">{{line.title}}</span></li>
+      <li><a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i>
+</a></li>
+    </ul>                         
+                        <img alt="300x200" src="/media/{{ line.image }}" />
+                        
+                        <div class="caption">
+                            
+                           <div class="heading" align="center">{{ line.title }}</div>                            
+                           <div class="info">{{line.description}}</div>
+                            <div class="price">${{line.price}} <span class="old-price">$75.00</span></div>
+                              
+                            <p>
+                                
+                                 <a class="btn-link" href="/rango/item?title={{ line.title }}&location={{ line.location }}"
+                                
+                                value="{{ line.title }}"><button type="button" class="btn btn-info">{{ line.title }}</button></a>
+                                
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+            </div>
+        </div>
+    </div>
 </div>
+ 
+
+
+<!-- <div class="block">
+  
+  <div class="top">
+    <ul>
+      <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+      <li><span class="converse"></span></li>
+      <li><a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i>
+</a></li>
+    </ul>
+  </div>
+  
+  <div class="middle">
+    {% for line in ad_list %}
+    <img src="/media/{{ line.image }}" alt="pic" />
+  </div>
+  
+  <div class="bottom">
+    <div class="heading">{{ line.title }}</div>
+    <div class="info">{{line.description}}</div>
+    <div class="style"></div>
+    <div class="price">{{line.price}} <span class="old-price">$75.00</span></div>
+      {% for con in contect_list %}
+    <a class="btn-link" href="/rango/item?title={{ line.title }}&location={{ con.location }}"
+    value="{{ line.title }}"><button type="button" class="btn btn-info">{{ line.title }}</button></a>
+        {% endfor %}
+  </div>
+   {% endfor %}
+</div> -->
+<!-- <div class="block"> -->
+  
+<!--   <div class="top">
+    <ul>
+      <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+      <li><span class="converse">Converse</span></li>
+      <li><a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i>
+</a></li>
+    </ul>
+  </div> -->
+<!--   
+  <div class="middle">
+    <img src="https://www.converse.com/on/demandware.static/-/Sites-ConverseMaster/default/dw33d36cdd/images/hi-res/654210C_standard.jpg?sw=580&sh=580&sm=fit" alt="pic" />
+  </div>
+  
+  <div class="bottom">
+    <div class="heading">Chuck Taylor
+All Star Neon Floral Yth/Jr</div>
+    <div class="info">Neon converse edition</div>
+    <div class="style">Color: Black/White/Aegean Aqua / Style: 654210C</div>
+    <div class="price">$35.00 <span class="old-price">$45.00</span></div>
+  </div> -->
+  
+<!-- </div> -->
+<!-- <div class="block">
+  
+  <div class="top">
+    <ul>
+      <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+      <li><span class="converse">Converse</span></li>
+      <li><a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i>
+</a></li>
+    </ul>
+  </div>
+  
+  <div class="middle">
+    <img src="http://demandware.edgesuite.net/aalw_prd/on/demandware.static/-/Sites-ConverseMaster/default/dw183dd1f7/images/hi-res/M8437C_standard.jpg?sw=580&sh=580&sm=fit" alt="pic" />
+  </div>
+  
+  <div class="bottom">
+    <div class="heading">Chuck Taylor
+Stars and Bars</div>
+    <div class="info">Fresh converse edition</div>
+    <div class="style">Color: Stars & Bars / Style: M8437C</div>
+    <div class="price">$50.00</div>
+  </div>
+  
+</div>
+<div class="block">
+  
+  <div class="top">
+    <ul>
+      <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+      <li><span class="converse">Converse</span></li>
+      <li><a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i>
+</a></li>
+    </ul>
+  </div>
+  
+  <div class="middle">
+    <img src="https://www.converse.com/on/demandware.static/-/Sites-ConverseMaster/default/dwec469ff7/images/hi-res/151116C_standard.jpg?sw=580&sh=580&sm=fit" alt="pic" />
+  </div>
+  
+  <div class="bottom">
+    <div class="heading">Chuck Taylor
+All Star II Neon</div>
+    <div class="info">Neon converse edition</div>
+    <div class="style">Color: Teal/Navy/White / Style: 151116C</div>
+    <div class="price">$34.00 <span class="old-price">$50.00</span></div>
+  </div> -->
+  
+<!-- </div>
+ -->
 
 {% endblock %}
