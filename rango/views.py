@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from rango.forms import PageForm
 from rango.models import Category, Page, PostAd
 from rango.forms import CategoryForm
@@ -10,6 +11,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from datetime import datetime
+from registration.backends.simple.views import RegistrationView
 
 
 # Create your views here.
@@ -441,3 +443,27 @@ def refreshcomment(request):
 
 
     return HttpResponse(comment)
+
+
+@login_required
+def register_profile(request):
+    form = UserProfileForm()
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            user_profile = form.save(commit=False)
+            user_profile.user = request.user
+            user_profile.save()
+
+            return redirect('index')
+        else:
+            print(form.errors)
+
+    context_dict = {'form': form}
+
+    return render(request, 'rango/profile_registration.html', context_dict)
+
+
+class RangoRegistrationView(RegistrationView):
+    def get_success_url(self, user):
+        return reverse('register_profile')

@@ -250,7 +250,7 @@ body {
 	padding:10px;
 	background:#B81D22;
 	text-transform:uppercase;
-	font-family: 'ambleregular';	
+	font-family: 'ambleregular';
 }
 .categories li a{
 	display:block;
@@ -261,7 +261,11 @@ body {
     margin:0 20px;
     background:url(../images/drop_arrow.png) no-repeat 0;
     border-bottom: 1px solid #EEE;
-    text-transform:uppercase;	
+    text-transform:uppercase;
+}
+.old-price {
+  color: #f00;
+  text-decoration: line-through;
 }
 .categories li:last-child a{
 	border:none;
@@ -666,7 +670,7 @@ body {
 	border-radius:5px;
 }
 .share li img {
-	vertical-align:middle; 
+	vertical-align:middle;
 }
 .wish-list{
 	padding:15px 0;
@@ -831,7 +835,7 @@ body {
 }
 .your-review textarea{
 		resize:none;
-		height:120px;		
+		height:120px;
 }
 .your-review input[type="submit"]{
     font-size:1em;
@@ -1051,12 +1055,12 @@ body {
 	float:left;
 	margin: 1% 0 1% 1.6%;
 }
-.grid_1_of_3:first-child { 
-	margin-left: 0; 
-} 
+.grid_1_of_3:first-child {
+	margin-left: 0;
+}
 .images_1_of_3 {
 	width: 29.2%;
-	padding:1.5%; 
+	padding:1.5%;
 }
 .images_1_of_3  img {
 	max-width:100%;
@@ -1605,7 +1609,7 @@ body {
 	}
 	.span_2_of_3 {
 		width:94%;
-		padding:3%; 
+		padding:3%;
 	}
 	.col_1_of_3{
        margin:0;
@@ -1613,13 +1617,13 @@ body {
 	.panel p{
 		font-size:0.8em;
 	}
-	.col{ 
+	.col{
 		margin: 1% 0 1% 0%;
 	}
 	.span_1_of_3 {
 		width:94%;
-		padding:3%; 
-	} 
+		padding:3%;
+	}
    .contact-form input[type="text"],.contact-form textarea{
 		width:97%;
 	}
@@ -1654,7 +1658,7 @@ body {
 	.images_3_of_2 {
 		width: 75.8%;
 	}
-	
+
 }
 @media only screen and (max-width: 568px) {
 	.call,.account_desc {
@@ -1720,7 +1724,7 @@ body {
 	}
 	.span_2_of_3 {
 		width:96%;
-		padding:2%; 
+		padding:2%;
 	}
 	.span_1_of_4{
 		width:100%;
@@ -1747,12 +1751,12 @@ body {
 		font-size:0.9em;
 		line-height: 1.5;
 	}
-	.col { 
+	.col {
 		margin: 1% 0 1% 0%;
 	}
 	.span_1_of_3 {
 		width:96%;
-		padding:2%; 
+		padding:2%;
 	}
 	.contact-form input[type="text"],.contact-form textarea{
 		width:96%;
@@ -1831,7 +1835,7 @@ body {
 	.signup input[type="text"] {
 		width: 63%;
 	}
-	
+
 }
 @media only screen and (max-width: 375px) {
 	.menu li a {
