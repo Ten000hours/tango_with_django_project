@@ -879,7 +879,8 @@ header h1 a img {
         min-width: 0;
     }
 }
-
+.clear{clear:both}
+#showimg{object-fit: cover;}
 @media only screen and (max-width: 767px) {
   
     .banner>img {
@@ -980,3 +981,8 @@ header h1 a img {
         width: auto;
     }
 }
+
+
+
+
+

@@ -88,9 +88,11 @@ body {
   letter-spacing: 0;
 }
 .info {
+width:220px;
   font-size: 14px;
   color: #969696;
   margin-bottom: 10px;
+   word-break:break-all;
 }
 .style {
   font-size: 16px;
@@ -99,4 +101,10 @@ body {
 .old-price {
   color: #f00;
   text-decoration: line-through;
+}
+
+
+#change{
+
+
 }

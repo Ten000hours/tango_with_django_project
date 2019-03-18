@@ -1,4 +1,4 @@
-{% extends 'rango/base.html' %}
+{% extends 'rango/base_bootstrap.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -9,19 +9,23 @@
 {% if category %}
 <h1>{{ category.name }}</h1>
 
-{% if pages %}
+	{% if pages %}
 <ul>
-    {% for page in pages %}
+    	{% for page in pages %}
     <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-    {% endfor %}
+   		 {% endfor %}
 </ul>
-{% else %}
+	{% else %}
 <strong>No pages currently in category.</strong>
-{% endif %}
+	{% endif %}
+<div>
+<strong id="like_count">{{ category.likes }}</strong> people like this category
 {% if user.is_authenticated %}
-<a href="{% url 'add_page' category.slug %}">Add a Page</a>
+<button id="likes" data-catid="{{category.id}}"
+class="btn btn-primary btn-sm" type="button">
+Like
+</button>
 {% endif %}
-{% else %}
-The specified category does not exist!
+</div>
 {% endif %}
 {% endblock %}

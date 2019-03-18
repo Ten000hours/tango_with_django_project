@@ -4,6 +4,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 
+
 class Category(models.Model):
     name = models.CharField(max_length=128, unique=True)
     views = models.IntegerField(default=0)
@@ -52,16 +53,25 @@ class UserProfile(models.Model):
 
 # =================================================
 class PostAd(models.Model):
-    title = models.CharField(max_length=128)
+    title = models.CharField(max_length=128,unique=True)
     image = models.ImageField(upload_to='ad_images/', blank=True)
     description = models.TextField(blank=True)
     price= models.IntegerField(default=0)
     location = models.CharField(max_length=7,default="")
     email = models.EmailField(max_length=30 )
     phone = models.IntegerField(max_length=11, blank=True)
-    # slug = models.SlugField(unique=False, blank=True)
+    likes = models.IntegerField(default=0)
+    slug = models.SlugField(unique=True,blank=True)
 
     def __str__(self):
         return self.email
 
 # ==============
+class Comment(models.Model):
+    name = models.CharField(max_length=30,unique=True)
+    email =models.EmailField(max_length=20)
+    phone = models.IntegerField(max_length=11, blank=True)
+    message= models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name

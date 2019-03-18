@@ -1,57 +1,26 @@
-<!DOCTYPE html>
-
-
-<html>
+{% extends 'rango/base_bootstrap.html' %}
 {% load staticfiles %}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js">
-  <script src="{% static "js/rango-jquery.js" %}"></script>
-<link rel="icon" href="{% static 'images/favicon.ico' %}">
-<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
-<link rel="stylesheet" href="{% static "css/form.css" %}">
-<link rel="stylesheet" href="{% static "css/stuck.css" %}">
-<link rel="stylesheet" href="{% static "css/style.css" %}">
-<!-- ================================================================== -->
-<script src="{% static 'js/jquery.js' %}"></script>
-<script src="{% static 'js/jquery-migrate-1.1.1.js' %}"></script>
-<script src="{% static 'js/script.js' %}"></script> 
-<script src="{% static 'js/superfish.js' %}"></script>
-<script src="{% static  'js/jquery.equalheights.js' %}"></script> 
-<script src="{% static 'js/jquery.mobilemenu.js' %}"></script>
-<script src="{% static  'js/jquery.easing.1.3.js' %}"></script>
-<script src="{% static 'js/tmStickUp.js' %}"></script>
-<script src="{% static 'js/jquery.ui.totop.js' %}"></script>
-<script src="{% static 'js/TMForm.js' %}"></script>
-<script src="{% static 'js/modal.js' %}"></script>
+
+{% load crispy_forms_tags %}
 
   {% load rango_template_tags %}
-<head>
-<meta charset="utf-8">
-<meta name = "format-detection" content = "telephone=no" />
-  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  {% load threadedcomments_tags %}
+{% block title_block %}
+item
+{% endblock %}
+  
+<link rel="icon" href="{% static 'images/favicon.ico' %}">
+<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+
+<!-- ================================================================== -->
 
 
-<!-- ====================================================================================== -->
-  <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<style type="text/css">
 
-      <title>Rango - </title>
-      <!-- Bootstrap core CSS -->
-    <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
-
-
-  <style>
     /* Always set the map height explicitly to define the size of the div
      * element that contains the map. */
+
     #map {
       height: 40%;
       margin: auto 0;
@@ -77,15 +46,148 @@
       line-height: 30px;
       padding-left: 10px;
     }
-  </style>
+    #image{
+
+       width: 800px;
+    height: 400px;
+    border: 1px solid #000;
 
 
-  <title>
-    Rango -
+    }
+    #adimage{
 
-show item
+    width: 100%;
+    height: 100%;
 
-  </title>
+
+    }
+    #form{
+height: 50px;
+
+}
+</style>
+{% block body_block %}
+
+
+
+
+
+<!-- ====================================================================================== -->
+  
+
+
+
+
+
+  <div class="container" style="height:100%; width: 100%;">
+      <div class="row clearfix"style="height:100%; width: 100%;">
+        <div class="col-md-12 column" style="height:100%; width: 100%;">
+          <div class="row clearfix" style="height:100%; width: 100%;">
+            
+            <div class="col-md-8 column" style="margin: 0px">
+            
+
+              <div class="carousel slide" id="carousel-195321">
+                <ol class="carousel-indicators">
+                  <li data-slide-to="0" data-target="#carousel-195321">
+                  </li>
+                  <li data-slide-to="1" data-target="#carousel-195321" class="active">
+                  </li>
+                  <li data-slide-to="2" data-target="#carousel-195321">
+                  </li>
+                </ol>
+                <div class="carousel-inner">
+                   {% for ad in ad_list %}
+                  <div class="item active" id="image" >
+                    <img alt="" src="/media/{{ ad.image }}"  style="height:350px; width: 100%;" />
+                    <div class="carousel-caption">
+                      <h4>
+                        {{ ad.description }}
+                      </h4>
+                    </div>
+                  </div>
+                  <!-- <div class="item">
+                    <img alt="" src="v3/default2.jpg" />
+                    <div class="carousel-caption">
+                      <h4>
+                        Third Thumbnail label
+                      </h4>
+                      <p>
+                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                      </p>
+                    </div>
+                  </div> -->
+                </div> <a class="left carousel-control" href="#carousel-195321" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-195321" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+              </div>
+               
+              <div class="panel-group" id="panel-574473">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                     <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-574473" href="#panel-element-935286">title</a>
+                  </div>
+                  <div id="panel-element-935286" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      {{ ad.title }}
+                    </div>
+                  </div>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                     <a class="panel-title" data-toggle="collapse" data-parent="#panel-574473" href="#panel-element-493984">description</a>
+                  </div>
+                  <div id="panel-element-493984" class="panel-collapse in">
+                    <div class="panel-body ">
+                    <p> {{ ad.description }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                     <a class="panel-title" data-toggle="collapse" data-parent="#panel-574473" href="#panel-element-493980">price</a>
+                  </div>
+                  <div id="panel-element-493980" class="panel-collapse in">
+                    <div class="panel-body">
+                     {{ ad.price }}
+                    </div>
+                  </div>
+                </div>
+
+         
+
+
+
+
+<div class="row" >
+  {% for object in mes_list%}
+<div class="col-sm-1">
+<div class="thumbnail">
+<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+</div><!-- /thumbnail -->
+</div><!-- /col-sm-1 -->
+
+<div class="col-sm-5">
+<div class="panel panel-default">
+<div class="panel-heading">
+<strong>{{ object.name }}</strong> <span class="text-muted">commented 5 days ago</span>
+</div>
+<div class="panel-body">
+{{ object.message }}
+</div><!-- /panel-body -->
+</div><!-- /panel panel-default -->
+</div><!-- /col-sm-5 -->
+{% endfor %}    
+
+
+
+</div><!-- /row -->
+
+                <!-- ------------------------------------------------------ -->
+              
+<!-- ----------------------------------------------------- -->
+              </div>
+             
+            </div>
+
 <script>
 
         function initMap() {
@@ -130,309 +232,37 @@ show item
     <script defer 
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdK1s2hdJZYibJDz7HdxDX8zk99B1dtOg&callback=initMap">
     </script>
-</head>
-<body>
-<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-      <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="{% url 'index' %}">Rango</a>
 
-      <div class="collapse navbar-collapse" id="navbar">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 'index' %}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'about' %}">About</a>
-          </li>
-        {% if user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'add_category' %}">Add a New Category</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'auth_logout' %}?next=/rango/">Logout</a>
-            </li>
-        {% else %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'registration_register' %}">Register Here</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'auth_login' %}">Login</a>
-            </li>
-        {% endif %}
-        </ul>
-      </div>
-    </nav>
-  <div class="container" style="height:100%; width: 100%;">
-      <div class="row clearfix"style="height:100%; width: 100%;">
-        <div class="col-md-12 column" style="height:100%; width: 100%;">
-          <div class="row clearfix" style="height:100%; width: 100%;">
-            <div class="col-md-2 column">
-               <div class="col-sm-3 col-md-2 sidebar">
-
-            <ul class="nav nav-pills flex-column">
-            <li class="nav-item">  &nbsp Type to find a category</li>
-              <form>
-              <li class="nav-item"><input class="search-query form-control" type="text"
-                name="suggestion" value="" id="suggestion" />
-              </li>
-            </form>
-          </ul>
-            <hr />
-  <div id="cats">
-  </div>
-
-
-        </div>
-              
-         <!--      <div class="modal fade" id="modal-container-841650" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                      <h4 class="modal-title" id="myModalLabel">
-                        标题
-                      </h4>
-                    </div>
-                    <div class="modal-body">
-                      内容...
-                    </div>
-                    <div class="modal-footer">
-                       <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary">保存</button>
-                    </div>
-                  </div>
-                  
-                </div>
-                
-              </div> -->
-              
-            </div>
-            <div class="col-md-6 column">
-             <!--  <dl>
-                <dt>
-                  Description lists
-                </dt>
-                <dd>
-                  A description list is perfect for defining terms.
-                </dd>
-                <dt>
-                  Euismod
-                </dt>
-                <dd>
-                  Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
-                </dd>
-                <dd>
-                  Donec id elit non mi porta gravida at eget metus.
-                </dd>
-                <dt>
-                  Malesuada porta
-                </dt>
-                <dd>
-                  Etiam porta sem malesuada magna mollis euismod.
-                </dd>
-                <dt>
-                  Felis euismod semper eget lacinia
-                </dt>
-                <dd>
-                  Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                </dd>
-              </dl> -->
-
-              <div class="carousel slide" id="carousel-195321">
-                <ol class="carousel-indicators">
-                  <li data-slide-to="0" data-target="#carousel-195321">
-                  </li>
-                  <li data-slide-to="1" data-target="#carousel-195321" class="active">
-                  </li>
-                  <li data-slide-to="2" data-target="#carousel-195321">
-                  </li>
-                </ol>
-                <div class="carousel-inner">
-<!--                   <div class="item">
-                    <img alt="" src="v3/default.jpg" />
-                    <div class="carousel-caption">
-                      <h4>
-                        First Thumbnail label
-                      </h4>
-                      <p>
-                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                      </p>
-                    </div>
-                  </div> -->
-                   {% for ad in ad_list %}
-                  <div class="item active">
-                    <img alt="" src="/media/{{ ad.image }}" />
-                    <div class="carousel-caption">
-                      <h4>
-                        {{ ad.description }}
-                      </h4>
-                     <!--  <p>
-                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                      </p> -->
-                    </div>
-                  </div>
-                  <!-- <div class="item">
-                    <img alt="" src="v3/default2.jpg" />
-                    <div class="carousel-caption">
-                      <h4>
-                        Third Thumbnail label
-                      </h4>
-                      <p>
-                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                      </p>
-                    </div>
-                  </div> -->
-                </div> <a class="left carousel-control" href="#carousel-195321" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-195321" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-              </div>
-               
-              <div class="panel-group" id="panel-574473">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                     <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-574473" href="#panel-element-935286">title</a>
-                  </div>
-                  <div id="panel-element-935286" class="panel-collapse collapse">
-                    <div class="panel-body">
-                      {{ ad.title }}
-                    </div>
-                  </div>
-                </div>
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                     <a class="panel-title" data-toggle="collapse" data-parent="#panel-574473" href="#panel-element-493984">description</a>
-                  </div>
-                  <div id="panel-element-493984" class="panel-collapse in">
-                    <div class="panel-body">
-                     {{ ad.description }}
-                    </div>
-                  </div>
-                </div>
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                     <a class="panel-title" data-toggle="collapse" data-parent="#panel-574473" href="#panel-element-493980">price</a>
-                  </div>
-                  <div id="panel-element-493980" class="panel-collapse in">
-                    <div class="panel-body">
-                     {{ ad.price }}
-                    </div>
-                  </div>
-                </div>
-                <!-- ------------------------------------------------------ -->
-              
-<!-- ----------------------------------------------------- -->
-              </div>
-             
-            </div>
-            <div class="col-md-4 column" style="height:100%; width: 100%;">
-            
-                <div id="map"></div>
+            <div class="col-md-4 column" style="height:100%; width: 99%;">
+                <div class="affix" style="height:100%; width: 99%;">
+                <div id="map" ></div>
                
                  Postcode:
                <input id="address" type="textbox" value={{ ad.location }}>
-                <address> <strong>Seller Profile</strong><br /><br />email: {{ ad.email }}<br /> <abbr title="Phone">Phone number:</abbr> {{ ad.phone }}</address>
-                <button type="button" class="btn btn-primary" >like</button>
-                
+                <address> <strong>Seller Profile</strong><br /><br /><strong>email: {{ ad.email }}</strong><br /> <abbr title="Phone"><strong>Phone number:</abbr> {{ ad.phone }}</strong></address>
+                <div>
+                <strong id="like_count_item">{{ ad.likes }}</strong> people like this item
+                {% if user.is_authenticated %}
+                <button id="likes_item" data-adid="{{ad.id}}" class="btn btn-primary btn-sm" type="button"><i class="fas fa-heart">Like</i></button>
+                  {% endif %}
+                </div>
+                </div>
             </div>
              {% endfor %}
           </div>
         </div>
       </div>
-    </div>
+
 
     <!-- ============================================================ -->
-      <div class="form_block">
-  <div class="container">
-    <div class="row">
-      <div class="grid_11">
-        <h2>Contact Form</h2>
-        <form id="form" >
-        <div class="form_spinner">
-        <img src="{% static "images/Preloader_4.gif"%}" alt="">
-        </div>
-        <div class="modal fade response-message">
-        <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Modal title</h4>
-        </div>
-        <div class="modal-body">
-        asfasfasf
-        </div>      
-        </div>
-        </div>
-        </div>
-        <div class="response-error-message"></div>
-   
- 
-        <label class="sr_only" for="name">
-        <input type="text" name="name" class="form-control"  placeholder="Name:" value="" required  />
-        <span class="empty-message">*This field is required.</span>
-        <span class="error-message">*This is not a valid name.</span>
-        </label>         
-        <label class="email">
-        <input type="text" name="email" placeholder="E-mail:" value="" required />
-        <span class="empty-message">*This field is required.</span>
-        <span class="error-message">*This is not a valid email.</span>
-        </label>
-        <label class="phone">
-        <input type="text" name="phone" placeholder="Phone:" value="" required />
-        
-        </label>
-        <label class="message">
-        <textarea name="message" placeholder="Message:"  required></textarea>
-        <span class="empty-message">*This field is required.</span>
-        <span class="error-message">*The message is too short.</span>
-        </label>
-        <div class="clear"></div>
-        <div class="btns">
-        <button type="reset" class="btn">clear</button>
-        <button type="submit" class="btn">send</button>
-        <!-- <a href="#" type="submit" class="btn">send</a> -->
-        </div>
-        </form>   
-      </div>
-    </div>
-  </div>
-</div>
+    <div class="clear"></div>
+
 <!-- ----------------------------------------------------------------------------------------------------------- -->
-<!--   <div class="jumbotron">
 
-        <h1 class="display-3">Rango says</h1>
-      
-    </div>  
-  <div class="row marketing" style="height:100%; width: 100%;">
-    <div class="col-lg-6">
-  {% for ad,con in item %}
-  {{ ad.title }}<br>
-  {{ ad.description }}<br>
-  <img src="/media/{{ ad.image }}">
-  </div>
-  
-    <div  class="col-lg-6" style="height:50%; width: 20%;">
-    <input id="address" type="textbox" value={{ con.location }}>
-    <input id="submit" type="button" value="Geocode">
-    
-    <div id="map"></div>
-   </div>
-</div> -->
-
-<!-- <div id="floating-panel">
-    <input id="address" type="textbox" value={{ con.location }}>
-    <input id="submit" type="button" value="Geocode">
-  </div>
-  <div id="map"></div> -->
-  {% endfor %}
   
 
 
 
 
 
-  <hr />
-
-
-</body>
-
-</html>
+{% endblock %}

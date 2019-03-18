@@ -1,6 +1,9 @@
 from django import forms
+from django.forms import ModelForm,HiddenInput
 from django.contrib.auth.models import User
-from rango.models import Category, Page, UserProfile,PostAd
+from rango.models import Category, Page, UserProfile,PostAd,Comment
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Field
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="please enter the category name")
@@ -48,8 +51,25 @@ class UserProfileForm(forms.ModelForm):
 
 # ===================================
 class PostForm(forms.ModelForm):
-
+    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
     class Meta:
         model = PostAd
         fields = ('title', 'image', 'description',"price",'location', 'email', 'phone')
+        widgets = {'likes': forms.HiddenInput()}
 
+    def __init__(self, *args, **kwargs):
+        super(PostForm, self).__init__(*args, **kwargs)
+        self.fields['likes'].widget = HiddenInput()
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Field('likes', type='hidden'),
+
+            )
+
+# =================================================
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ('name', 'email',"phone","message")

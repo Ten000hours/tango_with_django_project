@@ -38,9 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rango',
     'geoposition',
-    "registration"
-]
+    "registration",
+    "crispy_forms",
+    'threadedcomments',
+    'django_comments',
+    'django.contrib.sites',
 
+]
+COMMENTS_APP = 'threadedcomments'
+SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -145,3 +151,5 @@ LOGIN_REDIRECT_URL = '/rango/'
 # The page users are directed to if they are not logged in,
 # and are trying to access pages requiring authentication
 LOGIN_URL = '/accounts/login/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

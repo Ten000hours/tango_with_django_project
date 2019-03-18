@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from registration.backends.simple.views import RegistrationView
 
+
 # Create a new class that redirects the user to the index page,
 # if successful at logging
 class MyRegistrationView(RegistrationView):
@@ -42,7 +43,5 @@ urlpatterns = [
                       MyRegistrationView.as_view(),
                       name='registration_register'),
 
+
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-

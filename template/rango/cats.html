@@ -3,10 +3,11 @@
 		{% for c in cats %}
 		    {% if c == act_cat %}
         <strong>
-		        <li class="nav-item"><strong><a href="{% url 'show_category' c.slug %}">{{ c.name }}</a></strong></li>
+		        <li class="nav-item"><strong>{{ c.title }}</strong></li>
+		        <!-- <a href="{% url 'show_category' c.slug %}"></a> -->
 		    </strong>
             {% else  %}
-		         <li class="nav-item"><a href="{% url 'show_category' c.slug %}">{{ c.name }}</a></li>
+		         <li class="nav-item">{{ c.title }}</li>
 		    {% endif %}
 		{% endfor %}
 	{% endif %}

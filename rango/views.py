@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rango.forms import PageForm
-from rango.models import Category, Page
+from rango.models import Category, Page, PostAd
 from rango.forms import CategoryForm
-from rango.forms import UserForm, UserProfileForm, PostForm
+from rango.forms import UserForm, UserProfileForm, PostForm, CommentForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -85,6 +85,27 @@ def show_category(request, category_name_slug):
         # Don't do anything -
         context_dict['category'] = None
         context_dict['pages'] = None
+    return render(request, 'rango/category.html', context_dict)
+
+
+def show_item(request, item_title_slug):
+    context_dict = {}
+    try:
+        ads = PostAd.objects.get(slug=item_title_slug)
+        # Retrieve all of the associated pages.
+        # Note that filter() will return a list of page objects or an empty list
+        # pages = Page.objects.filter(category=ads)
+        # Adds our results list to the template context under name pages.
+        # context_dict['pages'] = pages
+        # We also add the category object from
+        # the database to the context dictionary.
+        # We'll use this in the template to verify that the category exists.
+        context_dict['ads'] = ads
+    except PostAd.DoesNotExist:
+        # We get here if we didn't find the specified category.
+        # Don't do anything -
+        context_dict['ads'] = None
+        # context_dict['pages'] = None
     return render(request, 'rango/category.html', context_dict)
 
 
@@ -247,17 +268,16 @@ def post_ad(request):
     posted = False
     if request.method == 'POST':
         post_ad_form = PostForm(data=request.POST)
+        print(posted, post_ad_form)
 
-
-        if post_ad_form.is_valid() :
-
-            # ad.set_password(ad.password)
-
+        if post_ad_form.is_valid():
 
             ad_form = post_ad_form.save(commit=False)
-            # profile.user = user
+
+            print("run here")
             if 'image' in request.FILES:
                 ad_form.image = request.FILES['image']
+                ad_form.likes = 0
                 ad_form.save()
                 posted = True
             else:
@@ -267,7 +287,6 @@ def post_ad(request):
 
         post_ad_form = PostForm()
 
-
     return render(request,
                   'rango/postad.html',
                   {'post_ad_form': post_ad_form,
@@ -276,23 +295,149 @@ def post_ad(request):
                    })
 
 
+# def AdCreateView(CreateView):
+#     model=PostAd
+#     template_name = "postad.html"
+#     fields=('title',"image","description","price","location","email","phone")
+#     path('rango/postad.html',views.Ad)
 # ==============================
 def showitem(request):
     from rango import models
+    slide= models.PostAd.objects.order_by('-likes')[:1]
     ad_list = models.PostAd.objects.all()
 
-
     return render(request, "rango/showitem.html",
-                  {"ad_list": ad_list})
+                  {"ad_list": ad_list,"slide":slide})
 
 
 # =================================
 def item(request):
     from rango import models
 
+
     title = request.GET['title']
 
     ad_list = models.PostAd.objects.filter(title=title)
 
 
-    return render(request, "rango/item.html", {"ad_list": ad_list})
+    # mes = request.GET['message']
+
+
+    if request.method == 'GET':
+        com_form = CommentForm(data=request.POST)
+        print(com_form.is_valid())
+        if com_form.is_valid():
+            comment = com_form.save(commit=False)
+
+            comment.save()
+            # registered=True
+
+
+    else:
+        ## ON the PDF of tangowithdjango19,the e.g is like that:
+        #          else:
+        #              print(user_form.errors, profile_form.errors)
+        #  	else:
+        # user_form = UserForm()
+        #      	profile_form = UserProfileForm()
+
+        com_form = CommentForm()
+    mes_list = models.Comment.objects.all()
+    return render(request, "rango/item.html", {"mes_list": mes_list, "commentform": com_form,"ad_list": ad_list})
+
+
+
+# ========================
+@login_required
+def like_category(request):
+    cat_id = None
+    if request.method == "GET":
+        cat_id = request.GET['category_id']
+    likes = 0
+    if cat_id:
+        cat = Category.objects.get(id=int(cat_id))
+        if cat:
+            likes = cat.likes + 1
+            cat.likes = likes
+            cat.save()
+    return HttpResponse(likes)
+
+
+@login_required
+def like_ad(request):
+    ad_id = None
+    if request.method == "GET":
+        ad_id = request.GET['ad_id']
+    likes = 0
+    if ad_id:
+        ad = PostAd.objects.get(id=int(ad_id))
+        if ad:
+            likes = ad.likes + 1
+            ad.likes = likes
+            ad.save()
+    return HttpResponse(likes)
+
+
+def get_category_list(max_results=0, starts_with=''):
+    from rango import models
+    cat_list = []
+    if starts_with:
+        cat_list = models.PostAd.objects.filter(title__istartswith=starts_with)
+    if max_results > 0:
+        if len(cat_list) > max_results:
+            cat_list = cat_list[:max_results]
+    return cat_list
+
+
+def suggest_category(request):
+    cat_list = []
+    starts_with = ''
+    if request.method == 'GET':
+        starts_with = request.GET['suggestion']
+    cat_list = get_category_list(8, starts_with)
+    return render(request, 'rango/cats.html', {'cats': cat_list})
+
+
+def comment(request):
+    from rango import models
+
+    # mes = request.GET['message']
+
+    registered = False
+    if request.method == 'POST':
+        com_form = CommentForm(data=request.POST)
+        print(com_form.is_valid())
+        if com_form.is_valid():
+            comment = com_form.save(commit=False)
+            print("save")
+            comment.save()
+            # registered=True
+
+
+    else:
+        ## ON the PDF of tangowithdjango19,the e.g is like that:
+        #          else:
+        #              print(user_form.errors, profile_form.errors)
+        #  	else:
+        # user_form = UserForm()
+        #      	profile_form = UserProfileForm()
+        print("000")
+        com_form = CommentForm()
+    mes_list = models.Comment.objects.all()
+    return render(request, "rango/item.html", { "mes_list":mes_list,"commentform": com_form})
+
+
+def preview(request):
+    return  render(request,"rango/preview.html")
+def refreshcomment(request):
+    if request.method == 'POST':
+        com_form = CommentForm(data=request.POST)
+        print(com_form.is_valid())
+        if com_form.is_valid():
+            comment = com_form.save(commit=False)
+            print("save")
+            comment.save()
+            # registered=True
+
+
+    return HttpResponse(comment)
