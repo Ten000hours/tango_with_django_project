@@ -166,6 +166,7 @@ height: 50px!important;
                   </div>
                 </div>
 
+
          
 
 
@@ -253,7 +254,7 @@ height: 50px!important;
                
                  Postcode:
                <input id="address" type="textbox" value={{ ad.location }}>
-                <address> <strong>Seller Profile</strong><br /><br /><strong>email: {{ ad.email }}</strong><br /> <abbr title="Phone"><strong>Phone number:</abbr> {{ ad.phone }}</strong></address>
+                <address> <strong>Seller Profile</strong><br /><br /><a href="mailto:{{ ad.email }}"><strong>email: {{ ad.email }}</strong></a><br /> <abbr title="Phone"><strong>Phone number:</abbr> {{ ad.phone }}</strong></address>
                 <div>
                 <strong id="like_count_item">{{ ad.likes }}</strong> people like this item
                 {% if user.is_authenticated %}

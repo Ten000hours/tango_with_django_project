@@ -4,7 +4,46 @@
 {% block title_block %}
 show item
 {% endblock %}
+<style type="text/css">
+  
 
+
+hr {
+    border-top: 1px solid #007bff;
+    width:70%;
+}
+
+a {color: #000;}
+
+
+.card{
+    background-color: #FFFFFF;
+    padding:0;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius:4px;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+}
+
+
+.card:hover{
+    box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.3);
+    color:black;
+}
+
+address{
+  margin-bottom: 0px;
+}
+
+
+
+
+#author a{
+  color: #fff;
+  text-decoration: none;
+    
+}
+</style>
 {% block body_block %}
 <!-- <div>
     <table border="1">
@@ -56,8 +95,9 @@ show item
             <div class="header_bottom_left">        
         <div class="categories">
           <ul>
-            <h3>Categories</h3>
-              <li><a href="#">Mobile Phones</a></li>
+           
+            <h3>Products</h3>
+              <!-- <li><a href="#">Mobile Phones</a></li>
               <li><a href="#">Desktop</a></li>
               <li><a href="#">Laptop</a></li>
               <li><a href="#">Accessories</a></li>
@@ -68,7 +108,17 @@ show item
                <li><a href="#">Clothing</a></li>
                <li><a href="#">Home Decor &amp; Kitchen</a></li>
                <li><a href="#">Beauty &amp; Healthcare</a></li>
-               <li><a href="#">Toys, Kids &amp; Babies</a></li>
+               <li><a href="#">Toys, Kids &amp; Babies</a></li> -->
+ {% for line in ad_list %}
+               <ul class="nav nav-pills">
+        <li >
+           <a href="#prod"> <span class="badge pull-right">{{ line.likes}}</span> {{line.title}}</a> {% endfor %}
+        </li>
+        <li>
+           <a href="#"> <span class="badge pull-right">16</span> More</a>
+        </li>
+      </ul>
+
           </ul>
         </div>          
            </div>
@@ -82,7 +132,7 @@ show item
                     
                             <div id="slide-1" class="slide">                          
                    <div class="slider-img">
-                       <a href="preview.html"><img src="{% static 'images/bbig6.jpg' %}" alt="learn more" /></a>                     
+                       <a href="#prod"><img src="{% static 'images/bbig6.jpg' %}" alt="learn more" /></a>                     
                     </div>
                           <div class="slider-text">
                                      <h1>Clearance<br><span>SALE</span></h1>
@@ -90,7 +140,7 @@ show item
                      <div class="features_list">
                       <h4>Get to Know More About Our Memorable Services Lorem Ipsum is simply dummy text</h4>                            
                           </div>
-                           <a href="preview.html" class="button">Shop Now</a>
+                           <a href="#prod"class="button">Shop Now</a>
                              </div>                    
                     <div class="clear"></div>       
                           </div> 
@@ -103,16 +153,16 @@ show item
                      <div class="features_list">
                       <h4>Get to Know More About Our Memorable Services</h4>                             
                           </div>
-                           <a href="preview.html" class="button">Shop Now</a>
+                           <a href="#prod" class="button">Shop Now</a>
                              </div>   
                            <div class="slider-img">
-                       <a href="preview.html"><img src="{% static 'images/bbig5.jpg' %}" alt="learn more" /></a>
+                       <a href="#prod"><img src="{% static 'images/bbig5.jpg' %}" alt="learn more" /></a>
                     </div>                                                   
                     <div class="clear"></div>       
                           </div>
                           <div class="slide">                         
                             <div class="slider-img">
-                       <a href="preview.html"><img src="{% static 'images/bbig1.jpg' %}" alt="learn more" /></a>
+                       <a href="#prod"><img src="{% static 'images/bbig1.jpg' %}" alt="learn more" /></a>
                     </div>
                     <div class="slider-text">
                                      <h1>Clearance<br><span>SALE</span></h1>
@@ -120,7 +170,7 @@ show item
                      <div class="features_list">
                       <h4>Get to Know More About Our Memorable Services Lorem Ipsum is simply dummy text</h4>                            
                           </div>
-                           <a href="preview.html" class="button">Shop Now</a>
+                           <a href="#prod" class="button">Shop Now</a>
                              </div> 
                     <div class="clear"></div>       
                           </div>                        
@@ -138,7 +188,7 @@ show item
 <div class="main">
 <div class="content">
   
-  <div class="content_top">
+  <div class="content_top" id="prod">
         <div class="heading">
         <h3>New Products</h3>
         </div>
@@ -150,7 +200,7 @@ show item
 </div>
 
             <div class="row" >
-             {% for line in ad_list %}
+             <!-- {% for line in ad_list %}
                 <div class="col-md-4" style="width:100%;height:100%">
                     <div class="thumbnail" style="width:100%;height:100%">
     <ul>
@@ -165,7 +215,7 @@ show item
                            <div class="heading" align="center">{{ line.title }}</div>
                            </br>                            
                            <div class="info" >{{line.description}}</div>
-                            <div class="price" style="" >${{line.price}} <del style="color: red;">$75.00</del></div>
+                            <div class="price" style="" >${{line.price}} <span style="color: red;">$75.00</span></div>
                               
                             <p>
                                 
@@ -177,8 +227,72 @@ show item
                         </div>
                     </div>
                 </div>
-                {% endfor %}
+                {% endfor %} -->
                 
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+<div class="container-fluid">
+  <div class="row">
+
+
+    
+
+
+{% for line in ad_list %}
+
+    <div class="col-md-4 mt-5">
+      <div class="card text-center">
+        <img class="card-img-top" src="/media/{{ line.image }}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{ line.title }}</h5>
+          <hr>
+          <h6>{{ line.description }}</h6>
+          <div class="price"  >${{line.price}} <span class='old-price' style="color: red;">$75.00</span></div>
+          <p>
+             <a class="btn-link" href="/rango/item?title={{ line.title }}&location={{ line.location }}"
+                                
+                                value="{{ line.title }}"><button type="button" class="btn btn-info"><i class="far fa-eye"></i>Take a look！</button></a>
+            <a class="btn btn-primary" data-toggle="collapse" href="#{{line.title}}" role="button" aria-expanded="false" aria-controls="collapseExample">
+              <i class="fas fa-map" ></i> Maps
+            </a>
+          </p>
+          <div class="collapse" id="{{line.title}}">   <!-- id="collapseExample" -->
+            <div class="card card-body">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2237.8660937574095!2d-4.271258584597274!3d55.88233738058822!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x488844378eeecf9d%3A0xa4ee1a23285fa71e!2sFirhill+Rd%2C+Glasgow+G20+7BB!5e0!3m2!1szh-CN!2suk!4v1552989063620"  width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+              
+            </div>
+          </div>
+        </div>
+        <div class="card-footer text-muted">
+          <div class="row">
+            <div class="col">
+              <a href=""><i class="fas fa-map"></i></a>
+            </div>
+            <div class="col">
+              <a href="mailto:{{ line.email }}"><i class="fas fa-envelope"></i></a>
+            </div>
+            <div class="col">
+              <a href="tel:+{{line.phone}}"><i class="fas fa-phone"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+
+
+
+
+  </div>
+</div>
+
+<br>
+
+
+
+
             </div>
         </div>
     </div>
@@ -242,9 +356,6 @@ show item
         </div>
       </div>      
         </div>
-        <div class="copy_right">
-        <p>&copy; 2013 home_shoppe. All rights reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
-       </div>
     </div>
 
 <!-- <div class="block">

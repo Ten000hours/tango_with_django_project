@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rango',
-    'geoposition',
+
     "registration",
     "crispy_forms",
     'threadedcomments',
