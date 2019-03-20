@@ -63,6 +63,11 @@ class PostAd(models.Model):
     likes = models.IntegerField(default=0)
     slug = models.SlugField(unique=True,blank=True)
 
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(PostAd, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.email
 

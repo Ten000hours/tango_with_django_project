@@ -243,12 +243,13 @@ address{
 
     <div class="col-md-4 mt-5">
       <div class="card text-center">
-        <img class="card-img-top" src="/media/{{ line.image }}" alt="Card image cap">
+        <img class="card-img-top" src="/media/{{ line.image }}" alt="Card image cap" style="width: 100%;
+">
         <div class="card-body">
           <h5 class="card-title">{{ line.title }}</h5>
           <hr>
           <h6>{{ line.description }}</h6>
-          <div class="price"  >${{line.price}} <span class='old-price' style="color: red;">$75.00</span></div>
+          <div class="price"  >${{line.price}} <span class='old-price' style="color: red;">${{line.price|add:10}}</span></div>
           <p>
              <a class="btn-link" href="/rango/item?title={{ line.title }}&location={{ line.location }}"
                                 
