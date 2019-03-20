@@ -59,14 +59,11 @@ class PostAd(models.Model):
     price= models.IntegerField(default=0)
     location = models.CharField(max_length=7,default="")
     email = models.EmailField(max_length=30 )
-    phone = models.IntegerField(max_length=11, blank=True)
+    phone = models.IntegerField(max_length=11)
     likes = models.IntegerField(default=0)
-    slug = models.SlugField(unique=True,blank=True)
+    slug = models.SlugField(blank=True)
 
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super(PostAd, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.email
